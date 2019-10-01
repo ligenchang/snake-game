@@ -6,7 +6,7 @@
 #include <sstream>
 class Config {
 public:
-  virtual std::size_t Read(std::string field) = 0;
+  virtual std::size_t Read() = 0;
   virtual void Update(std::string field) = 0;
 };
 
@@ -14,8 +14,6 @@ class TxtConfig : public Config{
 public:
 
 std::size_t Read() override;
-
-
 void Update(std::string field)override;
 
 TxtConfig(std::string filename);

@@ -3,6 +3,7 @@
 #include <string>
 
 
+//Constructor if Renderer class
 Renderer::Renderer(const std::size_t screen_width,
                    const std::size_t screen_height,
                    const std::size_t grid_width, const std::size_t grid_height)
@@ -39,6 +40,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
+//Dispaly the food in screen properly
 void Renderer::RenderFood(SDL_Point* food){
   SDL_Rect block;
   block.w = screen_width / grid_width;
@@ -49,8 +51,7 @@ void Renderer::RenderFood(SDL_Point* food){
   SDL_RenderFillRect(sdl_renderer, &block);
 }
 
-
-// void Renderer::Render(Snake const snake, SDL_Point const &food) {
+//Render function to render food and snake
 void Renderer::Render(Snake const snake, std::vector<SDL_Point> &foods) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
@@ -86,11 +87,13 @@ void Renderer::Render(Snake const snake, std::vector<SDL_Point> &foods) {
   SDL_RenderPresent(sdl_renderer);
 }
 
+//update window title function
 void Renderer::UpdateWindowTitle(int score, int fps) {
   std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
   SDL_SetWindowTitle(sdl_window, title.c_str());
 }
 
+//update window title function with template
 template<class T>
 void Renderer::UpdateWindowTitle(T score, T fps, T lastseconds) {
   std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps) + " Last: " + std::to_string(lastseconds)};

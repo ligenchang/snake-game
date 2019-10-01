@@ -13,7 +13,7 @@ int main() {
   speed=tc->Read();
   delete tc;
 
-  std::size_t kFramesPerSecond{param};
+  std::size_t kFramesPerSecond{speed};
   std::size_t kMsPerFrame{1000 / kFramesPerSecond};
   constexpr std::size_t kScreenWidth{640};
   constexpr std::size_t kScreenHeight{640};

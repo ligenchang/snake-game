@@ -5,13 +5,13 @@
 #include <mutex>
 #include <algorithm>
 
+//Constructor of Game class
 Game::Game(std::size_t grid_width, std::size_t grid_height)
     : snake(std::make_shared<Snake>(grid_width, grid_height)),
       engine(dev()),
       random_w(0, static_cast<int>(grid_width)),
       random_h(0, static_cast<int>(grid_height))
 {
-
   std::vector<std::future<void>> futures;
   for (int i = 0; i < 10 - foods.size(); i++)
   {
@@ -19,7 +19,6 @@ Game::Game(std::size_t grid_width, std::size_t grid_height)
   }
 
   ready = true;
-
   _cond.notify_all();
   std::for_each(futures.begin(), futures.end(), [](std::future<void> &ftr) {
     ftr.wait();
@@ -28,6 +27,7 @@ Game::Game(std::size_t grid_width, std::size_t grid_height)
   std::cout << "foods size " << foods.size() << std::endl;
 }
 
+//The function to start the game loop
 void Game::Run(std::shared_ptr<Controller> const controller, Renderer renderer,
                std::size_t target_frame_duration)
 {
@@ -82,6 +82,7 @@ void Game::Run(std::shared_ptr<Controller> const controller, Renderer renderer,
   }
 }
 
+//The function of place food randomly
 void Game::PlaceFood()
 {
   std::unique_lock<std::mutex> uLock(_mutex);
@@ -99,6 +100,7 @@ void Game::PlaceFood()
   }
 }
 
+//Update snake's position and food's update
 void Game::Update()
 {
   if (!snake->alive)
@@ -123,14 +125,11 @@ void Game::Update()
       {
         futures.emplace_back(std::async(std::launch::async, &Game::PlaceFood, this));
       }
-
       ready = true;
-
       _cond.notify_all();
       std::for_each(futures.begin(), futures.end(), [](std::future<void> &ftr) {
         ftr.wait();
       });
-
       snake->GrowBody();
       snake->speed += 0.02;
       break;

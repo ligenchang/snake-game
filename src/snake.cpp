@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 
+//Update snake's position
 void Snake::Update() {
   SDL_Point prev_cell{
       static_cast<int>(head_x),
@@ -19,6 +20,8 @@ void Snake::Update() {
   }
 }
 
+
+//Update snake's head
 void Snake::UpdateHead() {
   // std::cout << "snake direction " <<static_cast<std::underlying_type<Direction>::type>(direction)  << std::endl;
   switch (direction) {
@@ -45,6 +48,7 @@ void Snake::UpdateHead() {
   head_y = fmod(head_y + grid_height, grid_height);
 }
 
+//Update snake's body
 void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) {
   // Add previous head location to vector
   body.push_back(prev_head_cell);
@@ -65,6 +69,7 @@ void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) 
   }
 }
 
+//Increase snake's body length
 void Snake::GrowBody() { growing = true; }
 
 // Inefficient method to check if cell is occupied by snake.
@@ -78,4 +83,7 @@ bool Snake::SnakeCell(int x, int y) {
     }
   }
   return false;
+}
+
+Snake::~Snake() {
 }

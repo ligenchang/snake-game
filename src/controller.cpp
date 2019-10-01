@@ -9,6 +9,7 @@ void Controller::ChangeDirection(Snake &snake, Snake::Direction input,
   return;
 }
 
+//Handle user's keyboard input and react 
 void Controller::HandleInput(bool &running, Snake &snake) const {
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
